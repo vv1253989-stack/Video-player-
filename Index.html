@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Video Player</title>
+</head>
+<body>
+    <h1>My Custom Player</h1>
+    <!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial; padding: 10px; background: #f0f0f0; }
+        input, button { 
+            width: 100%; 
+            padding: 15px; 
+            margin: 10px 0; 
+            font-size: 16px; 
+            border: none;
+            border-radius: 10px;
+        }
+        input { background: white; }
+        button { 
+            background: #4CAF50; 
+            color: white; 
+            font-weight: bold;
+        }
+        video { 
+            width: 100%; 
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .controls button {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h2>📱 Mobile Video Player</h2>
+    
+    <input type="url" id="url" 
+           placeholder="Paste video link"
+           value="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4">
+    
+    <button onclick="loadVideo()">▶️ Play Video</button>
+    
+    <video id="myVideo" controls>
+        Your phone doesn't support HTML5 video
+    </video>
+    
+    <div class="controls">
+        <button onclick="playPause()">⏯️ Play/Pause</button>
+        <button onclick="fullscreen()">📱 Fullscreen</button>
+        <button onclick="share()">📤 Share</button>
+    </div>
+
+    <script>
+        function loadVideo() {
+            const url = document.getElementById('url').value;
+            const video = document.getElementById('myVideo');
+            
+            if(url) {
+                video.src = url;
+                video.load();
+                video.play().catch(e => {
+                    alert('Tap the play button to start video');
+                });
+            } else {
+                alert('Please enter a video URL');
+            }
+        }
+        
+        function playPause() {
+            const video = document.getElementById('myVideo');
+            if(video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        }
+        
+        function fullscreen() {
+            const video = document.getElementById('myVideo');
+            if(video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if(video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen(); // iOS
+            }
+        }
+        
+        function share() {
+            const url = document.getElementById('url').value;
+            if(navigator.share) {
+                navigator.share({
+                    title: 'Video Player',
+                    text: 'Check out this video',
+                    url: url
+                });
+            } else {
+                alert('Copy this link: ' + url);
+            }
+        }
+        
+        // Auto-load on enter key
+        document.getElementById('url').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') loadVideo();
+        });
+    </script>
+</body>
+  </html>
+</body>
+</html>
